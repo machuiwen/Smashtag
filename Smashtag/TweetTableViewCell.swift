@@ -38,10 +38,21 @@ class TweetTableViewCell: UITableViewCell
         if let tweet = self.tweet
         {
             tweetTextLabel?.text = tweet.text
-            if tweetTextLabel?.text != nil  {
+            if tweetTextLabel?.text != nil {
                 for _ in tweet.media {
                     tweetTextLabel.text! += " 📷"
                 }
+                let myAttributedText = NSMutableAttributedString(string: tweetTextLabel.text!)
+                for hashtag in tweet.hashtags {
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: hashtag.nsrange)
+                }
+                for url in tweet.urls {
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: url.nsrange)
+                }
+                for mention in tweet.userMentions {
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.brownColor(), range: mention.nsrange)
+                }
+                tweetTextLabel.attributedText = myAttributedText
             }
             
             tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description
