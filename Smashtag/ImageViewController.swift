@@ -28,8 +28,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private weak var scrollView: UIScrollView! {
         didSet {
             scrollView.contentSize = imageView.frame.size
-            scrollView.minimumZoomScale = 0.003
-            scrollView.maximumZoomScale = 3.0
             scrollView.delegate = self
         }
     }
@@ -60,14 +58,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         set {
             imageView.image = newValue
             imageView.sizeToFit()
-//            scrollView?.contentSize = imageView.frame.size
-            if let s = scrollView {
-                s.contentSize = imageView.frame.size
-                if s.contentSize.width != 0 {
-                    s.zoomScale = max(scrollView.frame.height / s.contentSize.height, scrollView.frame.width / s.contentSize.width)
-                    print("scrollView width: \(s.frame.width) height: \(s.frame.height), imageView width: \(s.contentSize.width) height: \(s.contentSize.height)")
-                }
-            }
+            scrollView?.contentSize = imageView.frame.size
             spinner?.stopAnimating()
         }
     }
@@ -78,6 +69,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         return imageView
     }
     
+    func scrollViewDidZoom(scrollView: UIScrollView) {
+        userExplicitZoom = true
+    }
+    
     // MARK: View Controller Lifecycle
     
     override func viewWillAppear(animated: Bool) {
@@ -85,14 +80,36 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         if image == nil {
             fetchImage()
         }
-        //        scrollView.zoomScale = max(scrollView.frame.height / imageView.frame.height, scrollView.frame.width / imageView.frame.width)
-        //
-        //        print("scrollView width: \(scrollView.frame.width) height: \(scrollView.frame.height), imageView width: \(imageView.frame.width) height: \(imageView.frame.height)")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.addSubview(imageView)
+        scrollView.minimumZoomScale = 0.04
+        scrollView.maximumZoomScale = 4.0
+        updateZoomScale()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateZoomScale()
+    }
+    
+    // MARK: UI Helper
+    
+    private var userExplicitZoom = false
+    private func updateZoomScale() {
+        if userExplicitZoom == false {
+            let scrollViewSize = scrollView.bounds.size
+            let imageViewSize = imageView.bounds.size
+            if scrollViewSize.width != 0 && imageViewSize.width != 0 {
+                let zoomScale = max(scrollViewSize.height / imageViewSize.height, scrollViewSize.width / imageViewSize.width)
+                scrollView.minimumZoomScale = min(0.04, zoomScale)
+                scrollView.maximumZoomScale = max(4, zoomScale)
+                scrollView.setZoomScale(zoomScale, animated: false)
+                userExplicitZoom = false
+            }
+        }
     }
     
 }
