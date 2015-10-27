@@ -20,7 +20,7 @@ class TweetTableViewCell: UITableViewCell
     }
     
     // MARK: UI
-
+    
     @IBOutlet private weak var tweetScreenNameLabel: UILabel!
     @IBOutlet private weak var tweetTextLabel: UILabel!
     @IBOutlet private weak var tweetCreatedLabel: UILabel!
@@ -42,6 +42,7 @@ class TweetTableViewCell: UITableViewCell
                 for _ in tweet.media {
                     tweetTextLabel.text! += " 📷"
                 }
+                // highlight hashtags, urls, and user mentions in the text of each tweet
                 let myAttributedText = NSMutableAttributedString(string: tweetTextLabel.text!)
                 for hashtag in tweet.hashtags {
                     myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: hashtag.nsrange)
@@ -58,8 +59,12 @@ class TweetTableViewCell: UITableViewCell
             tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description
             
             if let profileImageURL = tweet.user.profileImageURL {
-                if let imageData = NSData(contentsOfURL: profileImageURL) { // blocks main thread!
-                    tweetProfileImageView?.image = UIImage(data: imageData)
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) { [ weak weakSelf = self ] in
+                    if let imageData = NSData(contentsOfURL: profileImageURL) {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            weakSelf?.tweetProfileImageView?.image = UIImage(data: imageData)
+                        }
+                    }
                 }
             }
             
@@ -71,6 +76,6 @@ class TweetTableViewCell: UITableViewCell
             }
             tweetCreatedLabel?.text = formatter.stringFromDate(tweet.created)
         }
-
+        
     }
 }

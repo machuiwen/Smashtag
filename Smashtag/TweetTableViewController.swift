@@ -129,6 +129,21 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         }
         return cell
     }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destinationvc: UIViewController? = segue.destinationViewController
+        if let navcon = destinationvc as? UINavigationController {
+            destinationvc = navcon.visibleViewController
+        }
+        if let mentionsvc = destinationvc as? MentionsTableViewController {
+            if let cell = sender as? TweetTableViewCell {
+                mentionsvc.navigationItem.title = cell.tweet?.user.name
+                mentionsvc.tweet = cell.tweet
+            }
+        }
+    }
 }
 
 // generic method added to UITableViewController
