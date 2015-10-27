@@ -60,6 +60,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         set {
             imageView.image = newValue
             imageView.sizeToFit()
+//            scrollView?.contentSize = imageView.frame.size
             if let s = scrollView {
                 s.contentSize = imageView.frame.size
                 if s.contentSize.width != 0 {

@@ -15,8 +15,14 @@ class RecentSearchTableViewController: UITableViewController {
     // MARK: - Public API
     
     var recentSearches: [String] {
-        defaults.synchronize()
         return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
+    }
+    
+    // MARK: - UI
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -31,7 +37,7 @@ class RecentSearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchCell", forIndexPath: indexPath)
-        cell.textLabel?.text = recentSearches[recentSearches.count - 1 - indexPath.section].lowercaseString
+        cell.textLabel?.text = recentSearches[recentSearches.count - 1 - indexPath.section]
         return cell
     }
     

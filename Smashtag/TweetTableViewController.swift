@@ -22,7 +22,13 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             searchForTweets()
             title = searchText
             if searchText != nil {
-                pastSearchHistory.append(searchText!)
+                if let id = pastSearchHistory.indexOf(searchText!.lowercaseString) {
+                    pastSearchHistory.removeAtIndex(id)
+                }
+                pastSearchHistory.append(searchText!.lowercaseString)
+                if pastSearchHistory.count > 100 {
+                    pastSearchHistory.removeFirst(pastSearchHistory.count - 100)
+                }
             }
         }
     }
@@ -42,9 +48,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
         }
         set {
-            defaults.removeObjectForKey("searches")
             defaults.setObject(newValue, forKey: "searches")
-            defaults.synchronize()
         }
     }
     
