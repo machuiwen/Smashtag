@@ -33,7 +33,7 @@ class MentionsTableViewController: UITableViewController {
                 return [
                     SectionInfo(titleForHeader: "Images", cellType: "ImageCell", numberOfRows: t.media.count),
                     SectionInfo(titleForHeader: "Hashtags", cellType: "TextCell", numberOfRows: t.hashtags.count),
-                    SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count),
+                    SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count + 1),
                     SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count)
                 ]
             } else {
@@ -64,7 +64,11 @@ class MentionsTableViewController: UITableViewController {
         case 1:
             cell.textLabel?.text = tweet?.hashtags[indexPath.row].keyword
         case 2:
-            cell.textLabel?.text = tweet?.userMentions[indexPath.row].keyword
+            if indexPath.row == 0 {
+                cell.textLabel?.text = tweet?.user.screenName
+            } else {
+                cell.textLabel?.text = tweet?.userMentions[indexPath.row - 1].keyword
+            }
         case 3:
             cell.textLabel?.text = tweet?.urls[indexPath.row].keyword
         default: break
