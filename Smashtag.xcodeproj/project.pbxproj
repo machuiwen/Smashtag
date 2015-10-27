@@ -12,6 +12,7 @@
 		5DF2A8071BDD98E100190EF9 /* MentionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A8061BDD98E100190EF9 /* MentionsTableViewController.swift */; };
 		5DF2A80B1BDDCCFF00190EF9 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A80A1BDDCCFF00190EF9 /* ImageTableViewCell.swift */; };
 		5DF2A80D1BDECC5900190EF9 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A80C1BDECC5900190EF9 /* ImageViewController.swift */; };
+		5DF2A80F1BDF261600190EF9 /* RecentSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A80E1BDF261600190EF9 /* RecentSearchTableViewController.swift */; };
 		ECB609BB1BD5BEED0006C8E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB609BA1BD5BEED0006C8E1 /* AppDelegate.swift */; };
 		ECB609C01BD5BEED0006C8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB609BE1BD5BEED0006C8E1 /* Main.storyboard */; };
 		ECB609C21BD5BEED0006C8E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECB609C11BD5BEED0006C8E1 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		5DF2A8061BDD98E100190EF9 /* MentionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionsTableViewController.swift; sourceTree = "<group>"; };
 		5DF2A80A1BDDCCFF00190EF9 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		5DF2A80C1BDECC5900190EF9 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		5DF2A80E1BDF261600190EF9 /* RecentSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewController.swift; sourceTree = "<group>"; };
 		ECB609B71BD5BEEC0006C8E1 /* Smashtag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smashtag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECB609BA1BD5BEED0006C8E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECB609BF1BD5BEED0006C8E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				ECB609CC1BD5BEFF0006C8E1 /* Supporting Files */,
 				ECB609BE1BD5BEED0006C8E1 /* Main.storyboard */,
+				5DF2A80E1BDF261600190EF9 /* RecentSearchTableViewController.swift */,
 				5DF2A80C1BDECC5900190EF9 /* ImageViewController.swift */,
 				5DF2A8061BDD98E100190EF9 /* MentionsTableViewController.swift */,
 				5DF2A80A1BDDCCFF00190EF9 /* ImageTableViewCell.swift */,
@@ -180,6 +183,7 @@
 				5DF2A80B1BDDCCFF00190EF9 /* ImageTableViewCell.swift in Sources */,
 				ECB609CE1BD5BFA40006C8E1 /* TweetTableViewController.swift in Sources */,
 				5DF2A80D1BDECC5900190EF9 /* ImageViewController.swift in Sources */,
+				5DF2A80F1BDF261600190EF9 /* RecentSearchTableViewController.swift in Sources */,
 				ECB609D41BD5C5810006C8E1 /* TweetTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

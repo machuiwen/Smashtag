@@ -60,7 +60,13 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         set {
             imageView.image = newValue
             imageView.sizeToFit()
-            scrollView?.contentSize = imageView.frame.size
+            if let s = scrollView {
+                s.contentSize = imageView.frame.size
+                if s.contentSize.width != 0 {
+                    s.zoomScale = max(scrollView.frame.height / s.contentSize.height, scrollView.frame.width / s.contentSize.width)
+                    print("scrollView width: \(s.frame.width) height: \(s.frame.height), imageView width: \(s.contentSize.width) height: \(s.contentSize.height)")
+                }
+            }
             spinner?.stopAnimating()
         }
     }
@@ -78,13 +84,14 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         if image == nil {
             fetchImage()
         }
+        //        scrollView.zoomScale = max(scrollView.frame.height / imageView.frame.height, scrollView.frame.width / imageView.frame.width)
+        //
+        //        print("scrollView width: \(scrollView.frame.width) height: \(scrollView.frame.height), imageView width: \(imageView.frame.width) height: \(imageView.frame.height)")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.addSubview(imageView)
-//        scrollView.zoomScale = max(scrollView.frame.height / imageView.frame.height, scrollView.frame.width / imageView.frame.width)
-//        print("scrollView width: \(scrollView.frame.width) height: \(scrollView.frame.height), imageView width: \(imageView.frame.width) height: \(imageView.frame.height)")
     }
     
 }

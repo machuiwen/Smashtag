@@ -11,8 +11,9 @@ import Twitter
 
 class TweetTableViewController: UITableViewController, UITextFieldDelegate
 {
+    
     // MARK: Public API
-
+    
     var searchText: String? {
         didSet {
             searchTextField?.text = searchText
@@ -20,17 +21,36 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             lastTwitterRequest = nil
             searchForTweets()
             title = searchText
+            if searchText != nil {
+                pastSearchHistory.append(searchText!)
+            }
         }
     }
-
+    
     var tweets = [Array<Twitter.Tweet>]() {
         didSet {
             tableView.reloadData() // Model changed -> do UITableViewDataSource dance
         }
     }
     
+    // MARK: Save Search History
+    
+    private let defaults = NSUserDefaults.standardUserDefaults()
+    
+    private var pastSearchHistory: [String] {
+        get {
+            return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
+        }
+        set {
+            defaults.removeObjectForKey("searches")
+            defaults.setObject(newValue, forKey: "searches")
+            defaults.synchronize()
+        }
+    }
+    
+    
     // MARK: Fetching Tweets
-
+    
     // if we had a recent last request, just get newer tweets
     // otherwise create a search based on our searchText
     private var twitterRequest: Twitter.Request? {
@@ -41,11 +61,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         }
         return lastTwitterRequest?.requestForNewer
     }
-
+    
     // track last request to make sure that when data comes back
     // from Twitter that we are still interested in that data
     private var lastTwitterRequest: Twitter.Request?
-
+    
     // performs twitterRequest
     // when result comes back, dispatch to main queue to update Model
     // turn refresh control on and off as we do so
@@ -83,7 +103,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     }
     
     // MARK: Search Text Field
-
+    
     @IBOutlet weak private var searchTextField: UITextField! {
         didSet {
             searchTextField.text = searchText
@@ -98,7 +118,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         }
         return true
     }
-
+    
     // MARK: View Controller Lifecycle
     
     override func viewDidLoad() {
@@ -110,19 +130,19 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     }
     
     // MARK: UITableViewDataSource
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return tweets.count
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets[section].count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath)
-
+        
         let tweet = tweets[indexPath.section][indexPath.row]
         if let tweetCell = cell as? TweetTableViewCell {
             tweetCell.tweet = tweet

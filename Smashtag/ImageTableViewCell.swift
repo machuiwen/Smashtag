@@ -27,8 +27,10 @@ class ImageTableViewCell: UITableViewCell {
         if let url = imageURL {
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) { [ weak weakSelf = self ] in
                 if let imageData = NSData(contentsOfURL: url) {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        weakSelf?.myImageView.image = UIImage(data: imageData)
+                    if url == weakSelf?.imageURL {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            weakSelf?.myImageView.image = UIImage(data: imageData)
+                        }
                     }
                 }
             }

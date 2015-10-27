@@ -45,13 +45,13 @@ class TweetTableViewCell: UITableViewCell
                 // highlight hashtags, urls, and user mentions in the text of each tweet
                 let myAttributedText = NSMutableAttributedString(string: tweetTextLabel.text!)
                 for hashtag in tweet.hashtags {
-                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: hashtag.nsrange)
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: hashtag.nsrange)
                 }
                 for url in tweet.urls {
-                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: url.nsrange)
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.brownColor(), range: url.nsrange)
                 }
                 for mention in tweet.userMentions {
-                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.brownColor(), range: mention.nsrange)
+                    myAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.orangeColor(), range: mention.nsrange)
                 }
                 tweetTextLabel.attributedText = myAttributedText
             }
@@ -61,8 +61,10 @@ class TweetTableViewCell: UITableViewCell
             if let profileImageURL = tweet.user.profileImageURL {
                 dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) { [ weak weakSelf = self ] in
                     if let imageData = NSData(contentsOfURL: profileImageURL) {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            weakSelf?.tweetProfileImageView?.image = UIImage(data: imageData)
+                        if profileImageURL == weakSelf?.tweet?.user.profileImageURL {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                weakSelf?.tweetProfileImageView?.image = UIImage(data: imageData)
+                            }
                         }
                     }
                 }
