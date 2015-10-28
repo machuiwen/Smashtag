@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5DDEE2F71BD814B7002A8827 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDEE2F61BD814B7002A8827 /* Twitter.framework */; };
-		5DDEE2F81BD814B7002A8827 /* Twitter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDEE2F61BD814B7002A8827 /* Twitter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5D891FA91BE13D67005503C9 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D891FA81BE13D67005503C9 /* Twitter.framework */; };
+		5D891FAA1BE13D67005503C9 /* Twitter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D891FA81BE13D67005503C9 /* Twitter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DF2A8071BDD98E100190EF9 /* MentionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A8061BDD98E100190EF9 /* MentionsTableViewController.swift */; };
 		5DF2A80B1BDDCCFF00190EF9 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A80A1BDDCCFF00190EF9 /* ImageTableViewCell.swift */; };
 		5DF2A80D1BDECC5900190EF9 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF2A80C1BDECC5900190EF9 /* ImageViewController.swift */; };
@@ -28,7 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5DDEE2F81BD814B7002A8827 /* Twitter.framework in Embed Frameworks */,
+				5D891FAA1BE13D67005503C9 /* Twitter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,7 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5DDEE2F61BD814B7002A8827 /* Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Twitter.framework; path = "/Users/WilliamMa/Desktop/Smashtag/Twitter/build/Debug-iphoneos/Twitter.framework"; sourceTree = "<absolute>"; };
+		5D891FA81BE13D67005503C9 /* Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Twitter.framework; path = "/Users/WilliamMa/Desktop/Smashtag/Twitter/build/Debug-iphoneos/Twitter.framework"; sourceTree = "<absolute>"; };
 		5DF2A8061BDD98E100190EF9 /* MentionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionsTableViewController.swift; sourceTree = "<group>"; };
 		5DF2A80A1BDDCCFF00190EF9 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		5DF2A80C1BDECC5900190EF9 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DDEE2F71BD814B7002A8827 /* Twitter.framework in Frameworks */,
+				5D891FA91BE13D67005503C9 /* Twitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,7 +66,7 @@
 		ECB609AE1BD5BEEC0006C8E1 = {
 			isa = PBXGroup;
 			children = (
-				5DDEE2F61BD814B7002A8827 /* Twitter.framework */,
+				5D891FA81BE13D67005503C9 /* Twitter.framework */,
 				ECB609B91BD5BEEC0006C8E1 /* Smashtag */,
 				ECB609B81BD5BEEC0006C8E1 /* Products */,
 			);
