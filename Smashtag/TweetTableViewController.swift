@@ -21,11 +21,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             lastTwitterRequest = nil
             searchForTweets()
             title = searchText
-            if searchText != nil {
-                if let id = pastSearchHistory.indexOf(searchText!.lowercaseString) {
+            if let query = searchText?.lowercaseString where !query.isEmpty {
+                if let id = pastSearchHistory.indexOf(query) {
                     pastSearchHistory.removeAtIndex(id)
                 }
-                pastSearchHistory.append(searchText!.lowercaseString)
+                pastSearchHistory.append(query)
                 if pastSearchHistory.count > 100 {
                     pastSearchHistory.removeFirst(pastSearchHistory.count - 100)
                 }
