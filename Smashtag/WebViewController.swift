@@ -12,7 +12,7 @@ class WebViewController: UIViewController {
     
     // MARK: - Public API
     
-    var urlPath: String? = "http://google.com" {
+    var urlPath: String? {
         didSet {
             loadAddressUrl()
         }
