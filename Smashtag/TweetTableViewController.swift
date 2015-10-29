@@ -21,15 +21,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             lastTwitterRequest = nil
             searchForTweets()
             title = searchText
-            if let query = searchText?.lowercaseString where !query.isEmpty {
-                if let id = recentSearches.indexOf(query) {
-                    recentSearches.removeAtIndex(id)
-                }
-                recentSearches.append(query)
-                if recentSearches.count > 100 {
-                    recentSearches.removeFirst(recentSearches.count - 100)
-                }
-            }
+            recentSearches.add(searchText)
         }
     }
     
@@ -39,19 +31,9 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         }
     }
     
-    // MARK: Save Search History
+    // MARK: Search History Object
     
-    private let defaults = NSUserDefaults.standardUserDefaults()
-    
-    private var recentSearches: [String] {
-        get {
-            return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
-        }
-        set {
-            defaults.setObject(newValue, forKey: "searches")
-        }
-    }
-    
+    private var recentSearches = SearchHistory()
     
     // MARK: Fetching Tweets
     

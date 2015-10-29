@@ -12,15 +12,7 @@ class RecentSearchTableViewController: UITableViewController {
     
     // MARK: - Model
     
-    private let defaults = NSUserDefaults.standardUserDefaults()
-    private var recentSearches: [String] {
-        get {
-            return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
-        }
-        set {
-            defaults.setObject(newValue, forKey: "searches")
-        }
-    }
+    private var recentSearches = SearchHistory()
     
     // MARK: - UI
     
@@ -37,7 +29,7 @@ class RecentSearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchCell", forIndexPath: indexPath)
-        cell.textLabel?.text = recentSearches[recentSearches.count - 1 - indexPath.row]
+        cell.textLabel?.text = recentSearches.searchTextAtIndex(indexPath.row)
         return cell
     }
     
@@ -47,7 +39,7 @@ class RecentSearchTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            recentSearches.removeAtIndex(recentSearches.count - 1 - indexPath.row)
+            recentSearches.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
