@@ -10,12 +10,16 @@ import UIKit
 
 class RecentSearchTableViewController: UITableViewController {
     
+    // MARK: - Model
+    
     private let defaults = NSUserDefaults.standardUserDefaults()
-    
-    // MARK: - Public API
-    
-    var recentSearches: [String] {
-        return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
+    private var recentSearches: [String] {
+        get {
+            return (defaults.arrayForKey("searches") as? [String]) ?? [String]()
+        }
+        set {
+            defaults.setObject(newValue, forKey: "searches")
+        }
     }
     
     // MARK: - UI
@@ -27,18 +31,25 @@ class RecentSearchTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return recentSearches.count
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return recentSearches.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchCell", forIndexPath: indexPath)
-        cell.textLabel?.text = recentSearches[recentSearches.count - 1 - indexPath.section]
+        cell.textLabel?.text = recentSearches[recentSearches.count - 1 - indexPath.row]
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            recentSearches.removeAtIndex(recentSearches.count - 1 - indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     // MARK: - Navigation
