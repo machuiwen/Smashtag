@@ -35,7 +35,7 @@ class MentionsTableViewController: UITableViewController {
                     SectionInfo(titleForHeader: "Images", cellType: "ImageCell", numberOfRows: t.media.count, segueIdentifier: "Show Image"),
                     SectionInfo(titleForHeader: "Hashtags", cellType: "TextCell", numberOfRows: t.hashtags.count, segueIdentifier: "Search Hashtag"),
                     SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count + 1, segueIdentifier: "Search User"),
-                    SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count, segueIdentifier: nil)
+                    SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count, segueIdentifier: "Show Webpage")
                 ]
             } else {
                 return [SectionInfo]()
@@ -100,12 +100,6 @@ class MentionsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let segueIdentifier = sections[indexPath.section].segueIdentifier {
             performSegueWithIdentifier(segueIdentifier, sender: tableView.cellForRowAtIndexPath(indexPath))
-        } else {
-            if let urlStr = tweet?.urls[indexPath.row].keyword {
-                if let url = NSURL(string: urlStr) {
-                    UIApplication.sharedApplication().openURL(url)
-                }
-            }
         }
     }
     
@@ -129,6 +123,10 @@ class MentionsTableViewController: UITableViewController {
         } else if let imagevc = destinationvc as? ImageViewController {
             if let imageCell = sender as? ImageTableViewCell {
                 imagevc.imageURL = imageCell.imageURL
+            }
+        } else if let webvc = destinationvc as? WebViewController {
+            if let urlCell = sender as? UITableViewCell {
+                webvc.urlPath = urlCell.textLabel?.text
             }
         }
     }

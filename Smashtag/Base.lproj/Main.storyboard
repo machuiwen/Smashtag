@@ -161,6 +161,70 @@
             </objects>
             <point key="canvasLocation" x="2153" y="-47"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="Ovb-pL-3vG">
+            <objects>
+                <viewController id="5MD-uO-ecQ" customClass="WebViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d1G-Vk-gmD"/>
+                        <viewControllerLayoutGuide type="bottom" id="O9i-2z-W07"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="taC-qT-KOl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gmb-5T-81X">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RPl-1X-fkA">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="◀︎" id="CZU-c8-9Va">
+                                        <connections>
+                                            <action selector="goBack" destination="gmb-5T-81X" id="lHE-K2-18y"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="Ptr-90-68J"/>
+                                    <barButtonItem title="▶︎" id="xJb-95-a1C">
+                                        <connections>
+                                            <action selector="goForward" destination="gmb-5T-81X" id="ptB-lh-jnj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="rqM-L4-mEY"/>
+                                    <barButtonItem systemItem="refresh" id="fiz-3A-4lt">
+                                        <connections>
+                                            <action selector="reload" destination="gmb-5T-81X" id="XvV-cx-ZkP"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="iNp-go-kue"/>
+                                    <barButtonItem systemItem="stop" id="66K-b5-ZnW">
+                                        <connections>
+                                            <action selector="stopLoading" destination="gmb-5T-81X" id="fNj-xq-KbL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RPl-1X-fkA" firstAttribute="leading" secondItem="gmb-5T-81X" secondAttribute="leading" id="C4h-js-WEW"/>
+                            <constraint firstItem="gmb-5T-81X" firstAttribute="trailing" secondItem="taC-qT-KOl" secondAttribute="trailing" id="NcB-2J-cu3"/>
+                            <constraint firstItem="gmb-5T-81X" firstAttribute="bottom" secondItem="O9i-2z-W07" secondAttribute="top" id="OzZ-hr-g3P"/>
+                            <constraint firstItem="gmb-5T-81X" firstAttribute="leading" secondItem="taC-qT-KOl" secondAttribute="leading" id="PUT-YY-866"/>
+                            <constraint firstItem="RPl-1X-fkA" firstAttribute="bottom" secondItem="O9i-2z-W07" secondAttribute="top" id="WHh-Sh-3uK"/>
+                            <constraint firstItem="RPl-1X-fkA" firstAttribute="trailing" secondItem="gmb-5T-81X" secondAttribute="trailing" id="lR3-fo-vs3"/>
+                            <constraint firstItem="gmb-5T-81X" firstAttribute="top" secondItem="taC-qT-KOl" secondAttribute="top" id="tjg-34-70G"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="gmb-5T-81X" id="fqF-iS-bxJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9v-LI-lRl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2153" y="732"/>
+        </scene>
         <!--Mentions Table View Controller-->
         <scene sceneID="PEl-Uw-eg8">
             <objects>
@@ -238,6 +302,7 @@
                         <segue destination="joB-fW-SZB" kind="show" identifier="Show Image" id="tRO-SG-Zgn"/>
                         <segue destination="YbT-CB-pJJ" kind="show" identifier="Search User" id="DR3-fS-ZRz"/>
                         <segue destination="YbT-CB-pJJ" kind="show" identifier="Search Hashtag" id="twT-bv-FaT"/>
+                        <segue destination="5MD-uO-ecQ" kind="show" identifier="Show Webpage" id="QjH-C6-Xav"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGi-Xr-m9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -325,6 +390,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IPQ-ea-qPe"/>
+        <segue reference="twT-bv-FaT"/>
     </inferredMetricsTieBreakers>
 </document>
