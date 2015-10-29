@@ -190,7 +190,6 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="myImageView" destination="yDF-nf-kUh" id="tF4-Fc-F7h"/>
-                                    <segue destination="joB-fW-SZB" kind="show" identifier="showImage" id="k8m-bn-MKY"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" textLabel="ZeC-IP-jjL" style="IBUITableViewCellStyleDefault" id="a0n-tG-gya">
@@ -209,9 +208,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="YbT-CB-pJJ" kind="show" identifier="searchMention" id="zD0-EK-URs"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UrlCell" textLabel="hUN-uD-e6D" style="IBUITableViewCellStyleDefault" id="zy8-vm-o5R">
                                 <rect key="frame" x="0.0" y="334" width="600" height="44"/>
@@ -238,6 +234,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="qeN-Ku-VWT"/>
+                    <connections>
+                        <segue destination="joB-fW-SZB" kind="show" identifier="Show Image" id="tRO-SG-Zgn"/>
+                        <segue destination="YbT-CB-pJJ" kind="show" identifier="Search User" id="DR3-fS-ZRz"/>
+                        <segue destination="YbT-CB-pJJ" kind="show" identifier="Search Hashtag" id="twT-bv-FaT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IGi-Xr-m9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -260,7 +261,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ug-Ts-eB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-143" y="-47"/>
+            <point key="canvasLocation" x="-141" y="-73"/>
         </scene>
         <!--Recent Searches-->
         <scene sceneID="DaG-3L-nGe">
@@ -288,7 +289,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="YbT-CB-pJJ" kind="show" identifier="showSearch" id="IPQ-ea-qPe"/>
+                                    <segue destination="YbT-CB-pJJ" kind="show" identifier="Show Search" id="IPQ-ea-qPe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

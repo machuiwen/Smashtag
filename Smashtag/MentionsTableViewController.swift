@@ -25,16 +25,17 @@ class MentionsTableViewController: UITableViewController {
         var titleForHeader: String
         var cellType: String
         var numberOfRows: Int
+        var segueIdentifier: String?
     }
     
     private var sections: [SectionInfo] {
         get {
             if let t = tweet {
                 return [
-                    SectionInfo(titleForHeader: "Images", cellType: "ImageCell", numberOfRows: t.media.count),
-                    SectionInfo(titleForHeader: "Hashtags", cellType: "TextCell", numberOfRows: t.hashtags.count),
-                    SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count + 1),
-                    SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count)
+                    SectionInfo(titleForHeader: "Images", cellType: "ImageCell", numberOfRows: t.media.count, segueIdentifier: "Show Image"),
+                    SectionInfo(titleForHeader: "Hashtags", cellType: "TextCell", numberOfRows: t.hashtags.count, segueIdentifier: "Search Hashtag"),
+                    SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count + 1, segueIdentifier: "Search User"),
+                    SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count, segueIdentifier: nil)
                 ]
             } else {
                 return [SectionInfo]()
@@ -65,7 +66,9 @@ class MentionsTableViewController: UITableViewController {
             cell.textLabel?.text = tweet?.hashtags[indexPath.row].keyword
         case 2:
             if indexPath.row == 0 {
-                cell.textLabel?.text = tweet?.user.screenName
+                if let tweeter = tweet?.user.screenName {
+                    cell.textLabel?.text = "@" + tweeter
+                }
             } else {
                 cell.textLabel?.text = tweet?.userMentions[indexPath.row - 1].keyword
             }
@@ -95,7 +98,9 @@ class MentionsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 3 {
+        if let segueIdentifier = sections[indexPath.section].segueIdentifier {
+            performSegueWithIdentifier(segueIdentifier, sender: tableView.cellForRowAtIndexPath(indexPath))
+        } else {
             if let urlStr = tweet?.urls[indexPath.row].keyword {
                 if let url = NSURL(string: urlStr) {
                     UIApplication.sharedApplication().openURL(url)
@@ -113,7 +118,13 @@ class MentionsTableViewController: UITableViewController {
         }
         if let tweetvc = destinationvc as? TweetTableViewController {
             if let mention = sender as? UITableViewCell {
-                tweetvc.searchText = mention.textLabel?.text
+                if segue.identifier == "Search User" {
+                    if let user = mention.textLabel?.text {
+                        tweetvc.searchText = user + " OR " + user.substringFromIndex(user.startIndex.advancedBy(1))
+                    }
+                } else if segue.identifier == "Search Hashtag" {
+                    tweetvc.searchText = mention.textLabel?.text
+                }
             }
         } else if let imagevc = destinationvc as? ImageViewController {
             if let imageCell = sender as? ImageTableViewCell {
