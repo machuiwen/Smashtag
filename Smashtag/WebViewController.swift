@@ -40,4 +40,10 @@ class WebViewController: UIViewController {
         }
     }
     
+    // MARK: - Navigation
+    
+    @IBAction func goBackToRootView(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
 }

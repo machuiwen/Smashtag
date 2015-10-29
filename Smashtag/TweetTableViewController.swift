@@ -35,6 +35,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     private var recentSearches = SearchHistory()
     
+    // MARK: Go Back To Root Button Outlet
+    
+    @IBOutlet weak var goToRootViewButton: UIBarButtonItem!
+    
     // MARK: Fetching Tweets
     
     // if we had a recent last request, just get newer tweets
@@ -113,6 +117,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         tableView.estimatedRowHeight = tableView.rowHeight
         // but let autolayout pick the height of cells that become visible
         tableView.rowHeight = UITableViewAutomaticDimension
+        // if current view controller is root view controller, disable and hide RootView button
+        if self == self.navigationController?.viewControllers[0] {
+            goToRootViewButton.enabled = false
+            goToRootViewButton.title = nil
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -150,6 +159,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             }
         }
     }
+    
+    @IBAction func goBackToRootView(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
 }
 
 // generic method added to UITableViewController
