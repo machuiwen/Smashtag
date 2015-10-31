@@ -35,7 +35,7 @@ class MentionsTableViewController: UITableViewController {
                     SectionInfo(titleForHeader: "Images", cellType: "ImageCell", numberOfRows: t.media.count, segueIdentifier: "Show Image"),
                     SectionInfo(titleForHeader: "Hashtags", cellType: "TextCell", numberOfRows: t.hashtags.count, segueIdentifier: "Search Hashtag"),
                     SectionInfo(titleForHeader: "Users", cellType: "TextCell", numberOfRows: t.userMentions.count + 1, segueIdentifier: "Search User"),
-                    SectionInfo(titleForHeader: "Urls", cellType: "UrlCell", numberOfRows: t.urls.count, segueIdentifier: "Show Webpage")
+                    SectionInfo(titleForHeader: "Urls", cellType: "TextCell", numberOfRows: t.urls.count, segueIdentifier: "Show Webpage")
                 ]
             } else {
                 return [SectionInfo]()
