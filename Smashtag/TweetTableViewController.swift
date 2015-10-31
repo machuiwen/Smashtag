@@ -118,7 +118,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         // but let autolayout pick the height of cells that become visible
         tableView.rowHeight = UITableViewAutomaticDimension
         // if current view controller is root view controller, disable and hide RootView button
-        if self == self.navigationController?.viewControllers[0] {
+        if self == self.navigationController?.viewControllers.first {
             goToRootViewButton.enabled = false
             goToRootViewButton.title = nil
         }

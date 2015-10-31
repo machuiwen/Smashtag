@@ -17,11 +17,10 @@ class SearchHistory {
     // Add a new search query
     func add(searchText: String?) {
         if let query = searchText where !query.isEmpty {
-            let queryLowerCase = query.lowercaseString
-            if let id = recentSearches.indexOf(queryLowerCase) {
+            if let id = recentSearches.indexOf({ return $0.lowercaseString == query.lowercaseString }) {
                 recentSearches.removeAtIndex(id)
             }
-            recentSearches.append(queryLowerCase)
+            recentSearches.append(query)
             if recentSearches.count > maximumQueryNumber {
                 recentSearches.removeFirst(recentSearches.count - maximumQueryNumber)
             }
