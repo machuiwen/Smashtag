@@ -13,20 +13,24 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
     
     // MARK: Model
     
-    var searchText: String? { didSet { updateUI() } }
+    var searchTerm: String? { didSet { updateUI() } }
     var managedObjectContext: NSManagedObjectContext? { didSet { updateUI() } }
     
     // MARK: UI Updating
     
     private func updateUI() {
-        if let context = managedObjectContext where searchText != nil {
+        if let context = managedObjectContext where searchTerm != nil {
+            // update the popularity of the mentions
+            // to be displayed according to the search term
+            updatePopularityInDatabase(searchTerm!, inManagedObjectContext: context)
+            
             let request = NSFetchRequest(entityName: "Mention")
             request.sortDescriptors = [
                 NSSortDescriptor(key: "type", ascending: false),
                 NSSortDescriptor(key: "popularity", ascending: false),
                 NSSortDescriptor(key: "text", ascending: true, selector: "localizedCaseInsensitiveCompare:")
             ]
-            request.predicate = NSPredicate(format: "any tweets.text contains[c] %@ AND popularity > 1", searchText!)
+            request.predicate = NSPredicate(format: "any searchTerms.text ==[c] %@ AND popularity > 1", searchTerm!)
             fetchedResultsController = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context,
@@ -35,6 +39,25 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
             )
         } else {
             fetchedResultsController = nil
+        }
+    }
+    
+    private func updatePopularityInDatabase(searchTerm: String, inManagedObjectContext context: NSManagedObjectContext) {
+        context.performBlockAndWait {
+            let requestForMentions = NSFetchRequest(entityName: "Mention")
+            requestForMentions.predicate = NSPredicate(format: "any searchTerms.text ==[c] %@", searchTerm)
+            if let mentions = (try? context.executeFetchRequest(requestForMentions)) as? [Mention] {
+                for mention in mentions {
+                    let requestForPopularity = NSFetchRequest(entityName: "Tweet")
+                    requestForPopularity.predicate = NSPredicate(format: "any searchTerms.text ==[c] %@ AND any mentions.text ==[c] %@", searchTerm, mention.text!)
+                    mention.popularity = mention.managedObjectContext?.countForFetchRequest(requestForPopularity, error: nil)
+                }
+                do {
+                    try context.save()
+                } catch let error {
+                    print("Core Data Error: \(error)")
+                }
+            }
         }
     }
     

@@ -60,7 +60,7 @@ class RecentSearchTableViewController: UITableViewController {
                 }
             } else if segue.identifier == "Show Popular Mentions" {
                 if let popmentionvc = destinationvc as? PopularMentionsTableViewController {
-                    popmentionvc.searchText = search.textLabel?.text
+                    popmentionvc.searchTerm = search.textLabel?.text
                     popmentionvc.managedObjectContext = managedObjectContext
                     popmentionvc.navigationItem.title = search.textLabel?.text
                 }

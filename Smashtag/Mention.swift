@@ -23,7 +23,6 @@ class Mention: NSManagedObject
         request.predicate = NSPredicate(format: "text ==[c] %@", twitterInfo.keyword)
         
         if let mention = (try? context.executeFetchRequest(request))?.first as? Mention {
-            mention.popularity = (mention.popularity?.integerValue ?? 0) + 1
             return mention
         } else if let mention = NSEntityDescription.insertNewObjectForEntityForName("Mention", inManagedObjectContext: context) as? Mention {
             mention.text = twitterInfo.keyword
@@ -32,10 +31,29 @@ class Mention: NSManagedObject
             } else if twitterInfo.keyword[twitterInfo.keyword.startIndex] == "#" {
                 mention.type = "Hashtag"
             }
-            mention.popularity = 1
             return mention
         }
         return nil
     }
-
+    
+    // add a Tweet object to a Mention object
+    func addTweetObject(value: Tweet) {
+        self.mutableSetValueForKey("tweets").addObject(value)
+    }
+    
+    // remove a Tweet object from a Mention object
+    func removeTweetObject(value: Tweet) {
+        self.mutableSetValueForKey("tweets").removeObject(value)
+    }
+    
+    // add a SearchTerm object to a Mention object
+    func addSearchTermObject(value: SearchTerm) {
+        self.mutableSetValueForKey("searchTerms").addObject(value)
+    }
+    
+    // remove a SearchTerm object from a Mention object
+    func removeSearchTermObject(value: SearchTerm) {
+        self.mutableSetValueForKey("searchTerms").removeObject(value)
+    }
+    
 }

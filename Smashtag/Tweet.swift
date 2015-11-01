@@ -17,7 +17,7 @@ class Tweet: NSManagedObject
     // a Tweet with the characteristics of the passed Twitter.Tweet
     // in the database with the given context
     
-    class func tweetWithTwitterInfo(twitterInfo: Twitter.Tweet, inManagedObjectContext context: NSManagedObjectContext) -> Tweet?
+    class func tweetWithTwitterInfoAndSearchTerm(twitterInfo: Twitter.Tweet, searchTerm: SearchTerm, inManagedObjectContext context: NSManagedObjectContext) -> Tweet?
     {
         let request = NSFetchRequest(entityName: "Tweet")
         request.predicate = NSPredicate(format: "id == %@", twitterInfo.id)
@@ -26,10 +26,10 @@ class Tweet: NSManagedObject
             return tweet
         } else if let tweet = NSEntityDescription.insertNewObjectForEntityForName("Tweet", inManagedObjectContext: context) as? Tweet {
             tweet.id = twitterInfo.id
-            tweet.text = twitterInfo.text
             for mentionItem in (twitterInfo.userMentions + twitterInfo.hashtags) {
                 if let mention = Mention.mentionWithTwitterInfo(mentionItem, inManagedObjectContext: context) {
                     tweet.addMentionObject(mention)
+                    mention.addSearchTermObject(searchTerm)
                 }
             }
             return tweet
@@ -37,13 +37,24 @@ class Tweet: NSManagedObject
         return nil
     }
     
-    // add a mention object to a tweet
+    // add a Mention object to a Tweet object
     func addMentionObject(value: Mention) {
-        self.mutableSetValueForKey("mentions").addObject(value);
+        self.mutableSetValueForKey("mentions").addObject(value)
     }
     
-    // remove a mention object from a tweet
+    // remove a Mention object from a Tweet object
     func removeMentionObject(value:Mention) {
         self.mutableSetValueForKey("mentions").removeObject(value)
     }
+    
+    // add a SearchTerm object to a Tweet object
+    func addSearchTermObject(value: SearchTerm) {
+        self.mutableSetValueForKey("searchTerms").addObject(value)
+    }
+    
+    // remove a SearchTerm object from a Tweet object
+    func removeSearchTermObject(value: SearchTerm) {
+        self.mutableSetValueForKey("searchTerms").removeObject(value)
+    }
+    
 }

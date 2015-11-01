@@ -76,7 +76,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
                     if request === weakSelf?.lastTwitterRequest {
                         if !newTweets.isEmpty {
                             weakSelf?.tweets.insert(newTweets, atIndex: 0)
-                            weakSelf?.updateDatabase(newTweets)
+                        }
+                        // update database when searchText is not nil
+                        if let st = weakSelf?.searchText {
+                            weakSelf?.updateDatabase(withSearchTerm: st, andNewTweets: newTweets)
                         }
                         weakSelf?.refreshControl?.endRefreshing()
                     }
@@ -170,11 +173,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     // MARK: Core Data
     
-    private func updateDatabase(newTweets: [Twitter.Tweet]) {
+    private func updateDatabase(withSearchTerm searchTerm: String, andNewTweets newTweets: [Twitter.Tweet]) {
         if let context = managedObjectContext {
             context.performBlock {
-                for twitterInfo in newTweets {
-                    Tweet.tweetWithTwitterInfo(twitterInfo, inManagedObjectContext: context)
+                if let st = SearchTerm.searchTermWithString(searchTerm, inManagedObjectContext: context) {
+                    for twitterInfo in newTweets {
+                        let tweet = Tweet.tweetWithTwitterInfoAndSearchTerm(twitterInfo, searchTerm: st, inManagedObjectContext: context)
+                        tweet?.addSearchTermObject(st)
+                    }
                 }
                 do {
                     try context.save()
