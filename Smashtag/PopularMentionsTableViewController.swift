@@ -11,9 +11,12 @@ import CoreData
 
 class PopularMentionsTableViewController: CoreDataTableViewController {
     
+    // MARK: Model
+    
     var searchText: String? { didSet { updateUI() } }
     var managedObjectContext: NSManagedObjectContext? { didSet { updateUI() } }
     
+    // MARK: UI Updating
     
     private func updateUI() {
         if let context = managedObjectContext where searchText != nil {
@@ -34,6 +37,8 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
         }
     }
     
+    // MARK: UITableViewDataSource
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PopularMentionCell", forIndexPath: indexPath)
         if let mention = fetchedResultsController?.objectAtIndexPath(indexPath) as? Mention {
@@ -47,9 +52,29 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
             // show the number of times the mention was mentioned
             if let t = mentionPopularity {
                 cell.detailTextLabel?.text = (t == 1) ? "mentioned 1 time" : "mentioned \(t) times"
+            } else {
+                cell.detailTextLabel?.text = nil
             }
         }
         return cell
+    }
+    
+    //MARK: Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destinationvc: UIViewController? = segue.destinationViewController
+        if let navcon = destinationvc as? UINavigationController {
+            destinationvc = navcon.visibleViewController
+        }
+        if segue.identifier == "Show Search" {
+            if let tweetvc = segue.destinationViewController as? TweetTableViewController {
+                tweetvc.searchText = (sender as? UITableViewCell)?.textLabel?.text
+            }
+        }
+    }
+    
+    @IBAction private func goBackToRootView(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
 }

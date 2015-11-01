@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class RecentSearchTableViewController: UITableViewController {
     
     // MARK: - Model
     
-    private var recentSearches: SearchHistory = SearchHistory()
+    var recentSearches: SearchHistory = SearchHistory()
+    var managedObjectContext: NSManagedObjectContext? = AppDelegate.managedObjectContext
     
     // MARK: - UI
     
@@ -59,7 +61,7 @@ class RecentSearchTableViewController: UITableViewController {
             } else if segue.identifier == "Show Popular Mentions" {
                 if let popmentionvc = destinationvc as? PopularMentionsTableViewController {
                     popmentionvc.searchText = search.textLabel?.text
-                    popmentionvc.managedObjectContext = AppDelegate.managedObjectContext
+                    popmentionvc.managedObjectContext = managedObjectContext
                     popmentionvc.navigationItem.title = search.textLabel?.text
                 }
             }

@@ -131,7 +131,7 @@ class MentionsTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func goBackToRootView(sender: UIBarButtonItem) {
+    @IBAction private func goBackToRootView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     

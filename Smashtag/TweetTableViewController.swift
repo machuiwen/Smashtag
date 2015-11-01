@@ -15,6 +15,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     // MARK: Public API
     
+    var managedObjectContext: NSManagedObjectContext? = AppDelegate.managedObjectContext
+    
     var searchText: String? {
         didSet {
             searchTextField?.text = searchText
@@ -38,7 +40,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     // MARK: Go Back To Root Button Outlet
     
-    @IBOutlet weak var goToRootViewButton: UIBarButtonItem!
+    @IBOutlet private weak var goToRootViewButton: UIBarButtonItem!
     
     // MARK: Fetching Tweets
     
@@ -162,14 +164,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         }
     }
     
-    @IBAction func goBackToRootView(sender: UIBarButtonItem) {
+    @IBAction private func goBackToRootView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: Core Data
     
     private func updateDatabase(newTweets: [Twitter.Tweet]) {
-        if let context = AppDelegate.managedObjectContext {
+        if let context = managedObjectContext {
             context.performBlock {
                 for twitterInfo in newTweets {
                     Tweet.tweetWithTwitterInfo(twitterInfo, inManagedObjectContext: context)
@@ -180,17 +182,6 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
                     print("Core Data Error: \(error)")
                 }
             }
-            printDatabaseStatistics(context)
-            print("database statistics printed")
-        }
-    }
-    
-    private func printDatabaseStatistics(context: NSManagedObjectContext) {
-        context.performBlock {
-            let tweetCount = context.countForFetchRequest(NSFetchRequest(entityName: "Tweet"), error: nil)
-            let mentionCount = context.countForFetchRequest(NSFetchRequest(entityName: "Mention"), error: nil)
-            print("\(tweetCount) Tweets")
-            print("\(mentionCount) Mentions")
         }
     }
     
