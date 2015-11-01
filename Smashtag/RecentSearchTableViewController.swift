@@ -12,7 +12,7 @@ class RecentSearchTableViewController: UITableViewController {
     
     // MARK: - Model
     
-    private var recentSearches = SearchHistory()
+    private var recentSearches: SearchHistory = SearchHistory()
     
     // MARK: - UI
     
@@ -51,9 +51,17 @@ class RecentSearchTableViewController: UITableViewController {
         if let navcon = destinationvc as? UINavigationController {
             destinationvc = navcon.visibleViewController
         }
-        if let tweetvc = destinationvc as? TweetTableViewController {
-            if let search = sender as? UITableViewCell {
-                tweetvc.searchText = search.textLabel?.text
+        if let search = sender as? UITableViewCell {
+            if segue.identifier == "Show Search" {
+                if let tweetvc = destinationvc as? TweetTableViewController {
+                    tweetvc.searchText = search.textLabel?.text
+                }
+            } else if segue.identifier == "Show Popular Mentions" {
+                if let popmentionvc = destinationvc as? PopularMentionsTableViewController {
+                    popmentionvc.searchText = search.textLabel?.text
+                    popmentionvc.managedObjectContext = AppDelegate.managedObjectContext
+                    popmentionvc.navigationItem.title = search.textLabel?.text
+                }
             }
         }
     }

@@ -78,6 +78,5 @@ class TweetTableViewCell: UITableViewCell
             }
             tweetCreatedLabel?.text = formatter.stringFromDate(tweet.created)
         }
-        
     }
 }

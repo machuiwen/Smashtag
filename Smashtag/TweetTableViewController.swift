@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import Twitter
 
 class TweetTableViewController: UITableViewController, UITextFieldDelegate
@@ -73,6 +74,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
                     if request === weakSelf?.lastTwitterRequest {
                         if !newTweets.isEmpty {
                             weakSelf?.tweets.insert(newTweets, atIndex: 0)
+                            weakSelf?.updateDatabase(newTweets)
                         }
                         weakSelf?.refreshControl?.endRefreshing()
                     }
@@ -145,7 +147,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         return cell
     }
     
-    // MARK: - Navigation
+    // MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var destinationvc: UIViewController? = segue.destinationViewController
@@ -162,6 +164,34 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBAction func goBackToRootView(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    // MARK: Core Data
+    
+    private func updateDatabase(newTweets: [Twitter.Tweet]) {
+        if let context = AppDelegate.managedObjectContext {
+            context.performBlock {
+                for twitterInfo in newTweets {
+                    Tweet.tweetWithTwitterInfo(twitterInfo, inManagedObjectContext: context)
+                }
+                do {
+                    try context.save()
+                } catch let error {
+                    print("Core Data Error: \(error)")
+                }
+            }
+            printDatabaseStatistics(context)
+            print("database statistics printed")
+        }
+    }
+    
+    private func printDatabaseStatistics(context: NSManagedObjectContext) {
+        context.performBlock {
+            let tweetCount = context.countForFetchRequest(NSFetchRequest(entityName: "Tweet"), error: nil)
+            let mentionCount = context.countForFetchRequest(NSFetchRequest(entityName: "Mention"), error: nil)
+            print("\(tweetCount) Tweets")
+            print("\(mentionCount) Mentions")
+        }
     }
     
 }
