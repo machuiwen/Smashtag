@@ -3,6 +3,7 @@
     <entity name="Mention" representedClassName=".Mention" syncable="YES">
         <attribute name="popularity" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tweets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tweet" inverseName="mentions" inverseEntity="Tweet" syncable="YES"/>
     </entity>
     <entity name="Tweet" representedClassName=".Tweet" syncable="YES">
@@ -11,7 +12,7 @@
         <relationship name="mentions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mention" inverseName="tweets" inverseEntity="Mention" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Mention" positionX="124" positionY="-27" width="128" height="88"/>
+        <element name="Mention" positionX="124" positionY="-27" width="128" height="103"/>
         <element name="Tweet" positionX="-63" positionY="-27" width="128" height="88"/>
     </elements>
 </model>

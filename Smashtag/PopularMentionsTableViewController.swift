@@ -22,6 +22,7 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
         if let context = managedObjectContext where searchText != nil {
             let request = NSFetchRequest(entityName: "Mention")
             request.sortDescriptors = [
+                NSSortDescriptor(key: "type", ascending: false),
                 NSSortDescriptor(key: "popularity", ascending: false),
                 NSSortDescriptor(key: "text", ascending: true, selector: "localizedCaseInsensitiveCompare:")
             ]
@@ -29,7 +30,7 @@ class PopularMentionsTableViewController: CoreDataTableViewController {
             fetchedResultsController = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context,
-                sectionNameKeyPath: nil,
+                sectionNameKeyPath: "type",
                 cacheName: nil
             )
         } else {

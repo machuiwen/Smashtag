@@ -16,6 +16,7 @@ extension Mention {
 
     @NSManaged var text: String?
     @NSManaged var popularity: NSNumber?
+    @NSManaged var type: String?
     @NSManaged var tweets: NSSet?
 
 }
