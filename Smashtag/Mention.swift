@@ -27,9 +27,9 @@ class Mention: NSManagedObject
         } else if let mention = NSEntityDescription.insertNewObjectForEntityForName("Mention", inManagedObjectContext: context) as? Mention {
             mention.text = twitterInfo.keyword
             if twitterInfo.keyword[twitterInfo.keyword.startIndex] == "@"  {
-                mention.type = "User"
+                mention.type = "Users"
             } else if twitterInfo.keyword[twitterInfo.keyword.startIndex] == "#" {
-                mention.type = "Hashtag"
+                mention.type = "Hashtags"
             }
             return mention
         }

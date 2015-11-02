@@ -113,9 +113,13 @@ class MentionsTableViewController: UITableViewController {
         if let tweetvc = destinationvc as? TweetTableViewController {
             if let mention = sender as? UITableViewCell {
                 if segue.identifier == "Search User" {
+                    tweetvc.searchText = mention.textLabel?.text
+                    /*
+                    // HW4 extra credit, introduce confusion in HW5
                     if let user = mention.textLabel?.text {
                         tweetvc.searchText = user + " OR " + user.substringFromIndex(user.startIndex.advancedBy(1))
                     }
+                    */
                 } else if segue.identifier == "Search Hashtag" {
                     tweetvc.searchText = mention.textLabel?.text
                 }
