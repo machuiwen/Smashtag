@@ -122,7 +122,7 @@ class MentionsTableViewController: UITableViewController {
             }
         } else if let imagevc = destinationvc as? ImageViewController {
             if let imageCell = sender as? ImageTableViewCell {
-                imagevc.imageURL = imageCell.imageURL
+                imagevc.image = imageCell.myImage
             }
         } else if let webvc = destinationvc as? WebViewController {
             if let urlCell = sender as? UITableViewCell {

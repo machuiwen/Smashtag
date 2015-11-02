@@ -19,6 +19,15 @@ class ImageTableViewCell: UITableViewCell {
         }
     }
     
+    var myImage: UIImage? {
+        get {
+            return myImageView?.image
+        }
+        set {
+            myImageView?.image = newValue
+        }
+    }
+    
     // MARK: UI
     
     @IBOutlet private weak var myImageView: UIImageView!

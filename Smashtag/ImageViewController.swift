@@ -21,6 +21,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    var image: UIImage? {
+        get {
+            return imageView.image
+        }
+        set {
+            imageView.image = newValue
+            imageView.sizeToFit()
+            scrollView?.contentSize = imageView.frame.size
+            spinner?.stopAnimating()
+        }
+    }
+    
     // MARK: Outlets
     
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
@@ -50,18 +62,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private var imageView = UIImageView()
-    
-    private var image: UIImage? {
-        get {
-            return imageView.image
-        }
-        set {
-            imageView.image = newValue
-            imageView.sizeToFit()
-            scrollView?.contentSize = imageView.frame.size
-            spinner?.stopAnimating()
-        }
-    }
     
     // MARK: UIScrollViewDelegate
     
